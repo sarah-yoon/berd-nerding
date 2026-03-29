@@ -65,14 +65,14 @@ export default function MobileSpeciesSheet({ sightings, onSelect, speciesFilter,
           onClick={() => setOpen(true)}
           style={{
             position: 'absolute', top: 12, left: 12, zIndex: 500,
-            width: 40, height: 40, borderRadius: 10,
+            width: 60, height: 60, borderRadius: 14,
             background: 'rgba(14,14,28,0.92)', border: '1px solid rgba(255,255,255,0.15)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             boxShadow: '0 2px 10px rgba(0,0,0,0.4)',
             cursor: 'pointer',
           }}
         >
-          <List size={18} color="var(--color-accent)" />
+          <List size={26} color="var(--color-accent)" />
         </button>
       )}
 
