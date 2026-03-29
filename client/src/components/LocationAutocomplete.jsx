@@ -49,8 +49,8 @@ export default function LocationAutocomplete({ value, onChange, onSelect, placeh
       {!value && (
         <div style={{
           position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
-          display: 'flex', alignItems: 'center', paddingLeft: 16,
-          color: 'rgba(255,255,255,0.3)', fontSize: '0.9em',
+          display: 'flex', alignItems: 'center', paddingLeft: 20,
+          color: 'rgba(255,255,255,0.3)', fontSize: '1em',
           pointerEvents: 'none', zIndex: 1, borderRadius: 20,
         }}>
           {placeholder}
@@ -101,7 +101,7 @@ export default function LocationAutocomplete({ value, onChange, onSelect, placeh
 }
 
 const baseInputStyle = {
-  width: '100%', padding: '10px 16px', borderRadius: 20,
+  width: '100%', padding: '14px 20px', borderRadius: 24,
   border: '1px solid var(--color-border)',
-  color: '#fff', fontSize: '0.9em',
+  color: '#fff', fontSize: '1em',
 }

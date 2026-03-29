@@ -144,7 +144,7 @@ export default function HomePage() {
         <button
           type="submit"
           style={{
-            padding: '10px 20px', borderRadius: 20,
+            padding: '14px 32px', borderRadius: 20,
             background: 'var(--color-accent)', color: 'var(--color-accent-fg)',
             border: 'none', fontWeight: 600, whiteSpace: 'nowrap', flexShrink: 0,
           }}>
@@ -182,24 +182,24 @@ export default function HomePage() {
                 onClick={() => navigate(`/map?lat=${s.lat}&lng=${s.lng}&dist=25&species=${encodeURIComponent(s.comName)}&subId=${s.subId}&speciesCode=${s.speciesCode}`)}
                 style={{
                   background: 'var(--color-surface)', border: '1px solid var(--color-border)',
-                  borderLeft: '3px solid var(--color-accent)', borderRadius: 6,
-                  padding: '8px 12px', marginBottom: 6, cursor: 'pointer',
+                  borderLeft: '3px solid var(--color-accent)', borderRadius: 8,
+                  padding: '14px 18px', marginBottom: 10, cursor: 'pointer',
                   transition: 'background 0.15s',
                 }}
                 onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.06)'}
                 onMouseLeave={e => e.currentTarget.style.background = 'var(--color-surface)'}
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-                  <div style={{ fontFamily: 'Georgia,serif', fontWeight: 700, color: 'var(--color-text)', fontSize: '0.9em' }}>
+                  <div style={{ fontFamily: 'Georgia,serif', fontWeight: 700, color: 'var(--color-text)', fontSize: '1em' }}>
                     {s.comName}
                   </div>
                   {s.obsDt && (
-                    <span style={{ fontSize: '0.7em', color: 'var(--color-text-muted)', opacity: 0.7, flexShrink: 0, marginLeft: 8 }}>
+                    <span style={{ fontSize: '0.8em', color: 'var(--color-text-muted)', opacity: 0.7, flexShrink: 0, marginLeft: 8 }}>
                       {formatTime(s.obsDt)}
                     </span>
                   )}
                 </div>
-                <div style={{ fontSize: '0.75em', color: 'var(--color-text-muted)', display: 'flex', alignItems: 'center', gap: 3, marginTop: 2 }}>
+                <div style={{ fontSize: '0.85em', color: 'var(--color-text-muted)', display: 'flex', alignItems: 'center', gap: 4, marginTop: 4 }}>
                   <MapPin size={10} /> <AddressText sighting={s} style={{ fontSize: 'inherit', color: 'inherit' }} />
                 </div>
               </div>
