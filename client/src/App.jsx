@@ -17,7 +17,13 @@ import './styles/themes.css'
 function ThemedApp() {
   const theme = useTheme()
   return (
-    <div className={`theme-${theme}`} style={{ minHeight: '100dvh', background: 'var(--color-bg)', backgroundAttachment: 'fixed', backgroundColor: 'var(--color-bg-solid)' }}>
+    <div className={`theme-${theme}`} style={{
+      minHeight: '100dvh',
+      backgroundColor: 'var(--color-bg-solid)',
+      display: 'flex',
+      flexDirection: 'column',
+      flex: 1,
+    }}>
       <BrowserRouter>
         <Nav />
         <Routes>
