@@ -1,6 +1,6 @@
 const cache = new Map() // "lat,lng" → formatted address string
 
-export async function reverseGeocode(lat, lng) {
+async function reverseGeocodeOne(lat, lng) {
   const key = `${lat},${lng}`
   if (cache.has(key)) return cache.get(key)
 
@@ -9,6 +9,7 @@ export async function reverseGeocode(lat, lng) {
       `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json&zoom=18&addressdetails=1`,
       { headers: { 'User-Agent': 'BerdNerding/1.0' } }
     )
+    if (!res.ok) throw new Error(res.status)
     const data = await res.json()
     const addr = data.address || {}
 
@@ -34,34 +35,39 @@ export async function reverseGeocode(lat, lng) {
 }
 
 /**
- * Reverse geocode all unique coordinates from a list of sightings.
- * Returns a Map of "lat,lng" → formatted address.
- * Rate-limited to avoid hitting Nominatim's 1 req/sec limit.
+ * Reverse geocode unique coordinates progressively.
+ * Calls onUpdate after each batch so UI updates incrementally.
  */
-export async function batchReverseGeocode(sightings) {
-  const uniqueCoords = new Map()
+export async function batchReverseGeocode(sightings, onUpdate) {
+  const uniqueCoords = []
+  const seen = new Set()
   sightings.forEach(s => {
     const key = `${s.lat},${s.lng}`
-    if (!uniqueCoords.has(key) && !cache.has(key)) {
-      uniqueCoords.set(key, { lat: s.lat, lng: s.lng })
+    if (!seen.has(key)) {
+      seen.add(key)
+      if (!cache.has(key)) {
+        uniqueCoords.push({ lat: s.lat, lng: s.lng, key })
+      }
     }
   })
 
-  // Process in batches of 3 with 1 second delay between batches
-  const entries = [...uniqueCoords.entries()]
-  for (let i = 0; i < entries.length; i += 3) {
-    const batch = entries.slice(i, i + 3)
-    await Promise.all(batch.map(([, { lat, lng }]) => reverseGeocode(lat, lng)))
-    if (i + 3 < entries.length) {
-      await new Promise(r => setTimeout(r, 1100)) // Nominatim rate limit
+  // Process one at a time with 1.1s delay (Nominatim rate limit)
+  for (let i = 0; i < uniqueCoords.length; i++) {
+    const { lat, lng } = uniqueCoords[i]
+    await reverseGeocodeOne(lat, lng)
+
+    // Update state after every 5 geocodes or at the end
+    if ((i + 1) % 5 === 0 || i === uniqueCoords.length - 1) {
+      const result = new Map()
+      sightings.forEach(s => {
+        const k = `${s.lat},${s.lng}`
+        if (cache.has(k)) result.set(k, cache.get(k))
+      })
+      onUpdate(result)
+    }
+
+    if (i < uniqueCoords.length - 1) {
+      await new Promise(r => setTimeout(r, 1100))
     }
   }
-
-  // Return full cache for all coordinates in the sightings
-  const result = new Map()
-  sightings.forEach(s => {
-    const key = `${s.lat},${s.lng}`
-    if (cache.has(key)) result.set(key, cache.get(key))
-  })
-  return result
 }

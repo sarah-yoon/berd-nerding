@@ -83,10 +83,14 @@ export default function MapPage() {
       .then(entries => setIconMap(new Map(entries)))
   }, [sightings])
 
-  // Reverse geocode all unique coordinates to get proper addresses
+  // Reverse geocode all unique coordinates to get proper addresses (progressive)
   useEffect(() => {
     if (!sightings.length) return
-    batchReverseGeocode(sightings).then(setAddressMap)
+    let cancelled = false
+    batchReverseGeocode(sightings, (map) => {
+      if (!cancelled) setAddressMap(new Map(map))
+    })
+    return () => { cancelled = true }
   }, [sightings])
 
   useEffect(() => {
