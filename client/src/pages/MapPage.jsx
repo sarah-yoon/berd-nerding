@@ -135,7 +135,7 @@ export default function MapPage() {
   const panelOverlay = isTablet && selectedSighting
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 52px)' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', height: 'calc(100dvh - 44px)' }}>
       {/* Filter bar — only on mobile (desktop filter is inside the list) */}
       {isMobile && (
         <div style={{

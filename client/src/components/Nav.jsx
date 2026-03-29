@@ -13,18 +13,18 @@ export default function Nav() {
   return (
     <nav style={{
       display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-      padding: '12px 20px', background: 'rgba(0,0,0,0.3)',
-      borderBottom: '1px solid var(--color-border)', height: 52,
+      padding: '10px 14px', background: 'rgba(0,0,0,0.3)',
+      borderBottom: '1px solid var(--color-border)', height: 44,
     }}>
       <Link to="/" style={{
         fontFamily: 'Georgia,serif', color: 'var(--color-logo)',
-        textDecoration: 'none', fontWeight: 700, letterSpacing: '0.1em', fontSize: '0.95em',
+        textDecoration: 'none', fontWeight: 700, letterSpacing: '0.08em', fontSize: '0.85em',
       }}>✦ BERD NERDING</Link>
-      <div style={{ display: 'flex', gap: 16, alignItems: 'center', fontSize: '0.85em' }}>
+      <div style={{ display: 'flex', gap: 12, alignItems: 'center', fontSize: '0.8em' }}>
         {isAuth ? (
           <>
             <Link to="/list" style={{ color: 'var(--color-text-muted)', textDecoration: 'none' }}>My List</Link>
-            <Link to="/log" style={{ color: 'var(--color-text-muted)', textDecoration: 'none' }}>Log Sighting</Link>
+            <Link to="/log" style={{ color: 'var(--color-text-muted)', textDecoration: 'none' }}>Log</Link>
             <button onClick={handleLogout} style={{
               background: 'none', border: 'none', color: 'var(--color-text-muted)',
               cursor: 'pointer', fontSize: 'inherit',
