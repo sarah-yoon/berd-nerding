@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { sightingKey } from '../utils/sightingKey'
 import { formatLocName } from '../utils/formatLocName'
-import { List } from 'lucide-react'
+import { List, X } from 'lucide-react'
 
 function formatShortTime(obsDt) {
   if (!obsDt) return ''
@@ -64,15 +64,15 @@ export default function MobileSpeciesSheet({ sightings, onSelect, speciesFilter,
         <button
           onClick={() => setOpen(true)}
           style={{
-            position: 'absolute', bottom: 16, right: 16, zIndex: 500,
-            width: 44, height: 44, borderRadius: '50%',
+            position: 'absolute', top: 12, left: 12, zIndex: 500,
+            width: 40, height: 40, borderRadius: 10,
             background: 'rgba(14,14,28,0.92)', border: '1px solid rgba(255,255,255,0.15)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             boxShadow: '0 2px 10px rgba(0,0,0,0.4)',
             cursor: 'pointer',
           }}
         >
-          <List size={20} color="var(--color-accent)" />
+          <List size={18} color="var(--color-accent)" />
         </button>
       )}
 
@@ -87,30 +87,26 @@ export default function MobileSpeciesSheet({ sightings, onSelect, speciesFilter,
         />
       )}
 
-      {/* Bottom sheet */}
+      {/* Top sliding panel */}
       <div style={{
-        position: 'absolute', bottom: 0, left: 0, right: 0,
+        position: 'absolute', top: 0, left: 0, right: 0,
         zIndex: 600, background: 'rgba(14,14,28,0.98)',
-        borderTop: '2px solid var(--color-accent)',
-        borderRadius: '14px 14px 0 0',
-        transform: open ? 'translateY(0)' : 'translateY(100%)',
+        borderBottom: '2px solid var(--color-accent)',
+        borderRadius: '0 0 14px 14px',
+        transform: open ? 'translateY(0)' : 'translateY(-100%)',
         transition: 'transform 0.3s ease-out',
-        maxHeight: '55%', display: 'flex', flexDirection: 'column',
+        maxHeight: '60%', display: 'flex', flexDirection: 'column',
+        boxShadow: open ? '0 4px 20px rgba(0,0,0,0.5)' : 'none',
       }}>
-        {/* Drag handle */}
-        <div onClick={() => setOpen(false)} style={{ display: 'flex', justifyContent: 'center', padding: '8px 0 4px', cursor: 'pointer' }}>
-          <div style={{ width: 30, height: 4, background: 'rgba(255,255,255,0.25)', borderRadius: 2 }} />
-        </div>
-
-        {/* Filter */}
-        <div style={{ padding: '0 12px 8px', display: 'flex', gap: 8, alignItems: 'center' }}>
+        {/* Header */}
+        <div style={{ padding: '10px 12px 8px', display: 'flex', gap: 8, alignItems: 'center' }}>
           <input
             value={speciesFilter}
             onChange={e => onSpeciesFilterChange(e.target.value)}
             placeholder="Filter species…"
             autoComplete="off"
             style={{
-              flex: 1, padding: '6px 10px', borderRadius: 14,
+              flex: 1, padding: '7px 12px', borderRadius: 14,
               border: '1px solid var(--color-border)', background: 'rgba(0,0,0,0.2)',
               color: 'var(--color-text)', fontSize: '0.8em', outline: 'none',
             }}
@@ -118,6 +114,16 @@ export default function MobileSpeciesSheet({ sightings, onSelect, speciesFilter,
           <span style={{ color: 'var(--color-text-muted)', fontSize: '0.7em', flexShrink: 0 }}>
             {matched.length} species
           </span>
+          <button
+            onClick={() => setOpen(false)}
+            style={{
+              background: 'none', border: 'none', cursor: 'pointer',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              padding: 4,
+            }}
+          >
+            <X size={16} color="var(--color-text-muted)" />
+          </button>
         </div>
 
         {/* Species list */}
@@ -136,7 +142,6 @@ export default function MobileSpeciesSheet({ sightings, onSelect, speciesFilter,
             <>
               {matched.map(g => (
                 <div key={g.speciesCode}>
-                  {/* Species header */}
                   <div
                     onClick={() => toggleExpand(g.speciesCode)}
                     style={{
@@ -167,7 +172,6 @@ export default function MobileSpeciesSheet({ sightings, onSelect, speciesFilter,
                     </div>
                   </div>
 
-                  {/* Expanded locations */}
                   {expandedSpecies.has(g.speciesCode) && g.sightings.map(s => (
                     <div
                       key={sightingKey(s)}
@@ -196,7 +200,6 @@ export default function MobileSpeciesSheet({ sightings, onSelect, speciesFilter,
                 </div>
               ))}
 
-              {/* Unmatched */}
               {unmatched.length > 0 && (
                 <>
                   <div style={{
@@ -228,6 +231,11 @@ export default function MobileSpeciesSheet({ sightings, onSelect, speciesFilter,
               )}
             </>
           )}
+        </div>
+
+        {/* Bottom handle */}
+        <div onClick={() => setOpen(false)} style={{ display: 'flex', justifyContent: 'center', padding: '6px 0', cursor: 'pointer' }}>
+          <div style={{ width: 30, height: 4, background: 'rgba(255,255,255,0.2)', borderRadius: 2 }} />
         </div>
       </div>
     </>
