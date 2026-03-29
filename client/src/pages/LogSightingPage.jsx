@@ -77,7 +77,7 @@ export default function LogSightingPage() {
   const set = (key) => (val) => setForm(prev => ({ ...prev, [key]: val }))
 
   return (
-    <div style={{ maxWidth: 480, margin: '40px auto', padding: '0 16px' }}>
+    <div style={{ width: '60%', margin: '40px auto', padding: '0 24px' }}>
       <h2 style={{ color: 'var(--color-text)', marginBottom: 24 }}>
         {isEdit ? 'Edit Sighting' : 'Log a Sighting'}
       </h2>

@@ -41,7 +41,7 @@ export default function LifeListPage() {
   const milestone = MILESTONES.filter(m => speciesCount >= m).pop()
 
   return (
-    <div style={{ maxWidth: 680, margin: '0 auto', padding: '32px 16px' }}>
+    <div style={{ width: '60%', margin: '0 auto', padding: '32px 24px' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
         <h2 style={{ color: 'var(--color-text)' }}>My Life List</h2>
         <Link to="/log" style={{
