@@ -20,13 +20,7 @@ If you sign up, you can log your own sightings and build a personal "life list."
 
 **The map interaction took a lot of work.** I went through several iterations. Started with clustered markers (the numbered bubbles) but they were confusing. Ended up with individual dots, a grouped species list, and smooth fly-to animations when you click a sighting. The selected marker swaps to a bird icon pin so you can always see which one you picked.
 
-**It actually works on phones.** Not just "it fits on a small screen" but genuinely different UX. The species list slides down from the top as a sheet you can swipe away. Bird details pop up as a bottom card with swipe-to-dismiss. The map takes the full screen. I spent a lot of time on the touch gestures, like direction locking, velocity-based dismissal, and scroll protection.
-
-**Addresses are reverse-geocoded on demand.** eBird gives you raw coordinates or weird location names like "My Yard" or "Private Balcony." I built a system that geocodes each coordinate through Nominatim when you actually look at it, not all at once, with caching so it's instant the second time. It shows a skeleton shimmer while loading.
-
 **The theming is automatic.** The whole color scheme shifts based on time of day. Warm oranges at dawn, blues in the morning, greens in the afternoon, deep purples at night. Even the logo badge changes color.
-
-**I hit a lot of real bugs.** Mobile Safari caches placeholder text and won't clear it even when you set it to empty string. CSS transform on a parent breaks position fixed on children (cost me hours). Leaflet's internal z-index goes up to 600 and silently covers your dropdowns. I learned more debugging these than from any tutorial.
 
 ## Tech Stack
 
