@@ -1,63 +1,50 @@
 # Berd Nerding
 
-A full-stack birdwatching web app that shows real-time bird sightings near any location. Built with React, Node.js, and live eBird data.
+A birdwatching app I built that pulls live sighting data from eBird and plots it on an interactive map. You search a location, and it shows you every bird that's been spotted nearby — with photos, locations, and times.
 
-**Live:** [berd-nerding.vercel.app](https://berd-nerding.vercel.app)
+**Try it live:** [berd-nerding.vercel.app](https://berd-nerding.vercel.app)
 
 ---
 
+## Why I Built This
+
+I wanted to build something with real data, real APIs, and real problems to solve — not another todo app. Birdwatching has surprisingly rich public data through eBird, so I thought it'd be cool to make something that actually feels useful: search a city, see what birds are around, and keep track of what you've spotted.
+
 ## What It Does
 
-Search any city and instantly see what birds have been spotted nearby — powered by the eBird API's real-time observation data. Click a sighting to see photos from iNaturalist, explore species grouped by type, and build your own personal life list.
+Type in a city (or hit "use my location") and you get a map full of recent bird sightings. The sidebar groups them by species — tap one to expand and see where each was spotted. Click a location and the map flies over to show you exactly where, with a detail card showing the bird's photo pulled from iNaturalist.
 
-## Key Features
+If you sign up, you can log your own sightings and build a personal "life list" — it tracks milestones like your 10th, 25th, 50th species.
 
-**Interactive Map**
-- Leaflet map with individual sighting markers and fly-to animations
-- Click a marker to see bird details with species photo, location, time, and eBird checklist link
-- Hover pulse effects on markers when browsing the species list
-- Custom bird silhouette icon on selected markers
+## Features I'm Proud Of
 
-**Species Sidebar (Desktop)**
-- Sightings grouped by species with expandable location details
-- Filter by name to find specific birds
-- Collapsible panel with smooth slide animation
-- Cross-highlighting between list and map markers
+**The map interaction took a lot of work.** I went through several iterations — started with clustered markers (the numbered bubbles), but they were confusing. Ended up with individual dots, a grouped species list, and smooth fly-to animations when you click a sighting. The selected marker swaps to a bird icon pin so you can always see which one you picked.
 
-**Mobile-First Design**
-- Three responsive breakpoints: desktop, tablet, mobile
-- Top-sliding species sheet with swipe-up-to-close gesture
-- Bottom card for bird details with swipe-to-dismiss (direction locking + velocity detection)
-- Touch-optimized markers with enlarged hit targets
+**It actually works on phones.** Not just "it fits on a small screen" but genuinely different UX — the species list slides down from the top as a sheet you can swipe away, bird details pop up as a bottom card with swipe-to-dismiss, and the map takes the full screen. I spent a lot of time on the touch gestures (direction locking, velocity-based dismissal, scroll protection).
 
-**Smart Address Resolution**
-- On-demand reverse geocoding via Nominatim — only geocodes locations currently visible on screen
-- Skeleton loading states while addresses resolve
-- Module-level caching so repeated coordinates are instant
-- Formats to "Street, City, State" (no house numbers, no coordinates)
+**Addresses are reverse-geocoded on demand.** eBird gives you raw coordinates or weird location names like "My Yard" or "Private Balcony." I built a system that geocodes each coordinate through Nominatim when you actually look at it — not all at once — with caching so it's instant the second time. Shows a skeleton shimmer while loading.
 
-**Time-of-Day Theming**
-- 5 color themes that auto-switch based on the time: dawn, morning, afternoon, dusk, night
-- Logo badge color adapts to the current theme
-- Smooth CSS transitions between themes
+**The theming is automatic.** The whole color scheme shifts based on time of day — warm oranges at dawn, blues in the morning, greens in the afternoon, deep purples at night. Even the logo badge changes color.
 
-**User Accounts**
-- JWT authentication with registration and login
-- Personal life list tracking every species you've spotted
-- Milestone celebrations at 10, 25, 50, 100, 200 species
-- Log sightings with species autocomplete from nearby eBird data
+**I hit a lot of real bugs.** Mobile Safari caches placeholder text and won't clear it even when you set it to empty string. CSS `transform` on a parent breaks `position: fixed` on children (cost me hours). Leaflet's internal z-index goes up to 600 and silently covers your dropdowns. I learned more debugging these than from any tutorial.
 
 ## Tech Stack
 
-| Layer | Tech |
+| | |
 |---|---|
-| Frontend | React 18, Vite, Leaflet, Lucide React |
-| Backend | Node.js, Express, MySQL, Redis |
-| APIs | eBird (sightings), iNaturalist (photos), Nominatim (geocoding) |
-| Deployment | Vercel (frontend), Railway (backend + MySQL + Redis) |
-| Testing | Vitest, React Testing Library (76 tests) |
+| **Frontend** | React 18, Vite, Leaflet, Lucide React |
+| **Backend** | Node.js, Express, MySQL, Redis |
+| **APIs** | eBird (sightings), iNaturalist (photos), Nominatim (geocoding) |
+| **Deployed** | Vercel (frontend) + Railway (backend, MySQL, Redis) |
+| **Tests** | 76 tests with Vitest + React Testing Library |
 
-## Architecture
+## How It's Built
+
+The frontend is a React SPA with Vite. The map uses Leaflet with custom `divIcon` markers — no images, just styled HTML divs for the dots and pins. State management is just React hooks (no Redux or context for app state — `useState` and `useEffect` handled everything).
+
+The backend is a Node/Express API that proxies eBird and caches responses in Redis. Auth is JWT-based with bcrypt password hashing. User sightings are stored in MySQL.
+
+For deployment, the frontend is on Vercel and the backend + databases are on Railway. The trickiest part was getting CORS right and making sure the frontend's `VITE_API_URL` was baked into the build.
 
 ```
 client/                     server/
@@ -65,36 +52,31 @@ client/                     server/
     components/                 controllers/
       Map/SightingsMap.jsx        birdsController.js
       SightingsList.jsx           authController.js
-      BirdPanel.jsx               sightingsController.js
-      MobileBirdCard.jsx        services/
-      MobileSpeciesSheet.jsx      ebirdService.js
-      BirdSightingInfo.jsx        cacheService.js
-      AddressText.jsx           middleware/
-    pages/                        auth.js
-      HomePage.jsx                rateLimiter.js
-      MapPage.jsx               routes/
-      LifeListPage.jsx            birds.js
-      LogSightingPage.jsx         sightings.js
+      BirdPanel.jsx             services/
+      MobileBirdCard.jsx          ebirdService.js
+      MobileSpeciesSheet.jsx      cacheService.js
+    pages/                      middleware/
+      HomePage.jsx                auth.js
+      MapPage.jsx                 rateLimiter.js
     hooks/                      db/
       useBreakpoint.js            mysql.js
       useAddress.js               redis.js
     utils/
       reverseGeocode.js
-      formatLocName.js
       sightingKey.js
     services/
       iNaturalistService.js
 ```
 
-## Notable Implementation Details
+## Some Things I Learned
 
-- **Marker lifecycle optimization** — map markers update icons in-place via refs instead of rebuilding the entire layer, preserving map state and preventing flicker
-- **Composite sighting keys** — `subId_speciesCode` handles multiple species per eBird checklist
-- **Portal-based dropdowns** — autocomplete dropdowns render via `createPortal` to escape CSS `transform` stacking contexts
-- **Custom placeholder handling** — HTML placeholder replaced with a React-controlled overlay div to fix persistent mobile Safari rendering bugs
-- **Rate-limited geocoding** — Nominatim requests throttled to 1/sec with deduplication via pending promise map
+- `backgroundAttachment: fixed` doesn't work on mobile Safari. At all.
+- Leaflet creates stacking contexts with z-indexes up to 600. If your dropdown has `z-index: 200`, it's behind the map controls.
+- React's `onBlur` fires before `onClick` on dropdown items. You need `onMouseDown` instead, or the dropdown closes before the click registers.
+- Mobile browsers cache rendered placeholder text. Setting the attribute to empty string doesn't always clear it visually. I ended up replacing the HTML placeholder with a React-controlled overlay div.
+- `position: fixed` becomes `position: relative` if any ancestor has `transform` set — even `translateX(0)`. This broke my dropdowns inside a sliding panel.
 
-## Running Locally
+## Running It Locally
 
 ```bash
 # Frontend
@@ -106,22 +88,17 @@ npm run dev        # http://localhost:5173
 cd server
 cp .env.example .env   # fill in credentials
 npm install
-npm run db:setup       # create MySQL tables
+npm run db:setup
 npm run dev            # http://localhost:3001
 ```
 
-## Environment Variables
+You'll need an eBird API key (free from [ebird.org/api](https://ebird.org/api/keygen)) and MySQL + Redis running locally.
 
-See `server/.env.example` for required backend configuration:
-- `EBIRD_API_KEY` — free from [ebird.org/api](https://ebird.org/api/keygen)
-- `JWT_SECRET` — any random string
-- MySQL and Redis connection details
-
-## Testing
+## Tests
 
 ```bash
 cd client
-npm test          # 76 tests across 14 test files
+npm test    # 76 tests across 14 files
 ```
 
 ---
