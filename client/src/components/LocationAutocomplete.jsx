@@ -46,15 +46,24 @@ export default function LocationAutocomplete({ value, onChange, onSelect, placeh
 
   return (
     <div style={{ position: 'relative', flex: 1 }}>
+      {!value && (
+        <div style={{
+          position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
+          display: 'flex', alignItems: 'center', paddingLeft: 16,
+          color: 'rgba(255,255,255,0.3)', fontSize: '0.9em',
+          pointerEvents: 'none', zIndex: 1, borderRadius: 20,
+        }}>
+          {placeholder}
+        </div>
+      )}
       <input
         ref={inputRef}
         value={value}
         onChange={e => onChange(e.target.value)}
         onFocus={() => { if (results.length > 0) { updatePosition(); setOpen(true) } }}
         onBlur={() => setTimeout(() => setOpen(false), 150)}
-        placeholder={placeholder}
         autoComplete="off"
-        style={{ ...baseInputStyle, background: value ? 'transparent' : 'var(--color-surface)' }}
+        style={{ ...baseInputStyle, background: value ? 'transparent' : 'var(--color-surface)', position: 'relative', zIndex: 2 }}
       />
       {open && results.length > 0 && (
         <ul style={{
