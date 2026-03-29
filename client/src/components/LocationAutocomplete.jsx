@@ -93,6 +93,6 @@ export default function LocationAutocomplete({ value, onChange, onSelect, placeh
 
 const inputStyle = {
   width: '100%', padding: '10px 16px', borderRadius: 20,
-  border: '1px solid var(--color-border)', background: 'var(--color-surface)',
+  border: '1px solid var(--color-border)', background: 'rgba(20,20,40,0.95)',
   color: '#fff', fontSize: '0.9em',
 }
