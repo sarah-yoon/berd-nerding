@@ -29,7 +29,7 @@ if (require.main === module) {
   // Auto-create tables on startup
   const fs = require('fs')
   const path = require('path')
-  const pool = require('./src/db/mysql')
+  const { pool } = require('./src/db/mysql')
   const setupSql = fs.readFileSync(path.join(__dirname, 'db/setup.sql'), 'utf8')
   const statements = setupSql.split(';').map(s => s.trim()).filter(Boolean)
   Promise.all(statements.map(s => pool.query(s)))
