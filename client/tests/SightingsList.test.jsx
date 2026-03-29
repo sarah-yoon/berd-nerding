@@ -21,6 +21,7 @@ const defaultProps = {
   listOpen: true,
   onToggleList: vi.fn(),
   loading: false,
+  addressMap: new Map(),
 }
 
 test('renders species groups alphabetically', () => {

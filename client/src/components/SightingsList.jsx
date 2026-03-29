@@ -170,6 +170,7 @@ export default function SightingsList({
                   selectedKey={selectedKey}
                   isMatch={speciesFilter && speciesFilter.length >= 2}
                   filter={speciesFilter}
+                  addressMap={addressMap}
                 />
               ))}
 
@@ -196,6 +197,7 @@ export default function SightingsList({
                       onHoverEnd={onHoverEnd}
                       selectedKey={selectedKey}
                       dimmed
+                      addressMap={addressMap}
                     />
                   ))}
                 </>
@@ -223,7 +225,7 @@ function HighlightMatch({ text, filter }) {
   )
 }
 
-function SpeciesGroup({ group, expanded, onToggle, onSelect, onHover, onHoverEnd, selectedKey, isMatch, dimmed, filter }) {
+function SpeciesGroup({ group, expanded, onToggle, onSelect, onHover, onHoverEnd, selectedKey, isMatch, dimmed, filter, addressMap }) {
   return (
     <div style={{ opacity: dimmed ? 0.4 : 1 }}>
       {/* Species header row */}

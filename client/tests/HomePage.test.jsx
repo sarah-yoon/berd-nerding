@@ -32,7 +32,7 @@ beforeEach(() => {
 
 test('renders location search field', () => {
   renderPage()
-  expect(screen.getByPlaceholderText(/city, state/i)).toBeInTheDocument()
+  expect(screen.getByText(/city, state/i)).toBeInTheDocument()
 })
 
 test('shows error when search clicked with no location', async () => {
