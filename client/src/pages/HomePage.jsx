@@ -130,7 +130,7 @@ export default function HomePage() {
 
   return (
     <div style={{
-      width: isMobile ? '100%' : '70%',
+      width: isMobile ? '100%' : '60%',
       margin: '0 auto',
       padding: isMobile ? '20px 24px 24px' : '30px 24px 30px',
       minHeight: 'calc(100dvh - 52px)',
