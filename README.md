@@ -62,14 +62,6 @@ client/                     server/
       iNaturalistService.js
 ```
 
-## Some Things I Learned
-
-- backgroundAttachment fixed doesn't work on mobile Safari at all
-- Leaflet creates stacking contexts with z-indexes up to 600, so if your dropdown has z-index 200 it's behind the map controls
-- React's onBlur fires before onClick on dropdown items, so you need onMouseDown instead or the dropdown closes before the click registers
-- Mobile browsers cache rendered placeholder text and setting the attribute to empty string doesn't always clear it visually, so I ended up replacing the HTML placeholder with a React-controlled overlay div
-- position fixed becomes position relative if any ancestor has transform set, even translateX(0), which broke my dropdowns inside a sliding panel
-
 ## Running It Locally
 
 ```bash
