@@ -45,15 +45,26 @@ export default function LocationAutocomplete({ value, onChange, onSelect, placeh
     return name.length > 60 ? name.slice(0, 57) + '…' : name
   }
 
+  const showPlaceholder = !value && !focused
+
   return (
     <div style={{ position: 'relative', flex: 1 }}>
+      {showPlaceholder && (
+        <div style={{
+          position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
+          display: 'flex', alignItems: 'center', paddingLeft: 16,
+          color: 'rgba(255,255,255,0.3)', fontSize: '0.9em',
+          pointerEvents: 'none', zIndex: 1,
+        }}>
+          {placeholder}
+        </div>
+      )}
       <input
         ref={inputRef}
         value={value}
         onChange={e => onChange(e.target.value)}
         onFocus={() => { setFocused(true); if (results.length > 0) { updatePosition(); setOpen(true) } }}
         onBlur={() => { setFocused(false); setTimeout(() => setOpen(false), 150) }}
-        placeholder={focused ? '' : placeholder}
         autoComplete="off"
         style={inputStyle}
       />
