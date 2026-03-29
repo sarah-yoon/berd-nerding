@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useRef, useEffect } from 'react'
 import { sightingKey } from '../utils/sightingKey'
 import { formatLocName } from '../utils/formatLocName'
 import { List, X } from 'lucide-react'
@@ -29,6 +29,52 @@ function groupBySpecies(sightings) {
 export default function MobileSpeciesSheet({ sightings, onSelect, speciesFilter, onSpeciesFilterChange, loading }) {
   const [open, setOpen] = useState(false)
   const [expandedSpecies, setExpandedSpecies] = useState(new Set())
+  const panelRef = useRef(null)
+
+  // Swipe up to close
+  useEffect(() => {
+    const panel = panelRef.current
+    if (!panel || !open) return
+
+    let startY = 0, tracking = false, deltaY = 0
+
+    function onTouchStart(e) {
+      startY = e.touches[0].clientY
+      tracking = true
+      deltaY = 0
+      panel.style.transition = 'none'
+    }
+
+    function onTouchMove(e) {
+      if (!tracking) return
+      deltaY = e.touches[0].clientY - startY
+      // Only allow swiping up (negative deltaY) when scrolled to top
+      if (deltaY < 0 && panel.scrollTop <= 0) {
+        panel.style.transform = `translateY(${deltaY}px)`
+      }
+    }
+
+    function onTouchEnd() {
+      if (!tracking) return
+      tracking = false
+      panel.style.transition = 'transform 0.3s ease-out'
+      if (deltaY < -60) {
+        panel.style.transform = 'translateY(-100%)'
+        setTimeout(() => setOpen(false), 300)
+      } else {
+        panel.style.transform = 'translateY(0)'
+      }
+    }
+
+    panel.addEventListener('touchstart', onTouchStart, { passive: true })
+    panel.addEventListener('touchmove', onTouchMove, { passive: true })
+    panel.addEventListener('touchend', onTouchEnd, { passive: true })
+    return () => {
+      panel.removeEventListener('touchstart', onTouchStart)
+      panel.removeEventListener('touchmove', onTouchMove)
+      panel.removeEventListener('touchend', onTouchEnd)
+    }
+  }, [open])
 
   const groups = useMemo(() => groupBySpecies(sightings), [sightings])
 
@@ -88,7 +134,7 @@ export default function MobileSpeciesSheet({ sightings, onSelect, speciesFilter,
       )}
 
       {/* Top sliding panel */}
-      <div style={{
+      <div ref={panelRef} style={{
         position: 'absolute', top: 0, left: 0, right: 0,
         zIndex: 600, background: 'rgba(14,14,28,0.98)',
         borderBottom: '2px solid var(--color-accent)',
