@@ -5,6 +5,7 @@ export default function LocationAutocomplete({ value, onChange, onSelect, placeh
   const [results, setResults] = useState([])
   const [open, setOpen] = useState(false)
   const [dropdownStyle, setDropdownStyle] = useState({})
+  const [focused, setFocused] = useState(false)
   const timer = useRef(null)
   const inputRef = useRef(null)
 
@@ -50,9 +51,9 @@ export default function LocationAutocomplete({ value, onChange, onSelect, placeh
         ref={inputRef}
         value={value}
         onChange={e => onChange(e.target.value)}
-        onFocus={() => { if (results.length > 0) { updatePosition(); setOpen(true) } }}
-        onBlur={() => setTimeout(() => setOpen(false), 150)}
-        placeholder={placeholder}
+        onFocus={() => { setFocused(true); if (results.length > 0) { updatePosition(); setOpen(true) } }}
+        onBlur={() => { setFocused(false); setTimeout(() => setOpen(false), 150) }}
+        placeholder={focused ? '' : placeholder}
         autoComplete="off"
         style={inputStyle}
       />

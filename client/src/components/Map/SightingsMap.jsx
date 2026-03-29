@@ -61,7 +61,8 @@ export default function SightingsMap({
   // Init map
   useEffect(() => {
     if (mapObj.current) return
-    mapObj.current = L.map(mapRef.current).setView(center, 12)
+    const isMobile = window.innerWidth <= 768
+    mapObj.current = L.map(mapRef.current, { zoomControl: !isMobile }).setView(center, 12)
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© OpenStreetMap contributors',
     }).addTo(mapObj.current)
