@@ -30,7 +30,7 @@ export default function Nav() {
           <img
             src="/berd-nerding-logo.png"
             alt="Berd Nerding"
-            style={{ width: 32, height: 32, objectFit: 'contain' }}
+            style={{ width: 40, height: 40, objectFit: 'contain' }}
           />
         </div>
         <span style={{
