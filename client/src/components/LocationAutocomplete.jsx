@@ -9,6 +9,20 @@ export default function LocationAutocomplete({ value, onChange, onSelect, placeh
   const timer = useRef(null)
   const inputRef = useRef(null)
 
+  // Force clear placeholder by setting it directly on the DOM element
+  useEffect(() => {
+    const el = inputRef.current
+    if (!el) return
+    function onFocus() { el.setAttribute('placeholder', '') }
+    function onBlur() { el.setAttribute('placeholder', placeholder) }
+    el.addEventListener('focus', onFocus)
+    el.addEventListener('blur', onBlur)
+    return () => {
+      el.removeEventListener('focus', onFocus)
+      el.removeEventListener('blur', onBlur)
+    }
+  }, [placeholder])
+
   const updatePosition = useCallback(() => {
     if (!inputRef.current) return
     const rect = inputRef.current.getBoundingClientRect()

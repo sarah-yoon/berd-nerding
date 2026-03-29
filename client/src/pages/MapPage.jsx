@@ -256,6 +256,7 @@ export default function MapPage() {
             speciesFilter={speciesFilter}
             onSpeciesFilterChange={setSpeciesFilter}
             loading={loading}
+            initialOpen={true}
           />
         )}
 

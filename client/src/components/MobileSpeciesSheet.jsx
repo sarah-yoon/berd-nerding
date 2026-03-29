@@ -26,8 +26,8 @@ function groupBySpecies(sightings) {
   return [...map.values()].sort((a, b) => a.comName.localeCompare(b.comName))
 }
 
-export default function MobileSpeciesSheet({ sightings, onSelect, speciesFilter, onSpeciesFilterChange, loading }) {
-  const [open, setOpen] = useState(false)
+export default function MobileSpeciesSheet({ sightings, onSelect, speciesFilter, onSpeciesFilterChange, loading, initialOpen = false }) {
+  const [open, setOpen] = useState(initialOpen)
   const [expandedSpecies, setExpandedSpecies] = useState(new Set())
   const panelRef = useRef(null)
 

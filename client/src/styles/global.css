@@ -28,9 +28,9 @@ h1, h2, h3 { font-family: Georgia, serif; }
 
 input, button, select, textarea { font-family: inherit; font-size: inherit; }
 input, textarea { -webkit-appearance: none; }
-input:focus::placeholder { color: transparent !important; opacity: 0; }
-input:focus::-webkit-input-placeholder { color: transparent !important; opacity: 0; }
-input:focus::-moz-placeholder { color: transparent !important; opacity: 0; }
+input::placeholder { color: rgba(255,255,255,0.25); }
+input::-webkit-input-placeholder { color: rgba(255,255,255,0.25); }
+input::-moz-placeholder { color: rgba(255,255,255,0.25); }
 
 button { cursor: pointer; }
 button:disabled { opacity: 0.6; cursor: not-allowed; }
