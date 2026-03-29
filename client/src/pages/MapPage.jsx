@@ -176,10 +176,10 @@ export default function MapPage() {
           {!isMobile && (
             <div style={{
               position: 'absolute', top: 0, left: 0, right: 0, padding: '8px 12px',
-              background: 'rgba(14,14,28,0.85)', backdropFilter: 'blur(8px)',
+              background: 'rgba(14,14,28,0.92)', backdropFilter: 'blur(8px)',
               borderBottom: '1px solid var(--color-border)',
               display: 'flex', alignItems: 'center', gap: 8,
-              zIndex: 10, fontSize: 12,
+              zIndex: 1100, fontSize: 12,
             }}>
               <span style={{ color: 'var(--color-text-muted)' }}>Radius:</span>
               <select
