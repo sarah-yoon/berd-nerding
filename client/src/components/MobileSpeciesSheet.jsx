@@ -64,7 +64,7 @@ export default function MobileSpeciesSheet({ sightings, onSelect, speciesFilter,
         <button
           onClick={() => setOpen(true)}
           style={{
-            position: 'absolute', top: 12, left: 12, zIndex: 500,
+            position: 'absolute', top: 12, right: 12, zIndex: 500,
             width: 60, height: 60, borderRadius: 14,
             background: 'rgba(14,14,28,0.92)', border: '1px solid rgba(255,255,255,0.15)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
