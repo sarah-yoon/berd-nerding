@@ -41,7 +41,8 @@ button:disabled { opacity: 0.6; cursor: not-allowed; }
 
 .leaflet-control-zoom {
   position: absolute !important;
-  top: 80% !important;
+  top: auto !important;
+  bottom: 20px !important;
   left: 10px !important;
 }
 
