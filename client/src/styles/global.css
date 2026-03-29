@@ -39,6 +39,12 @@ button:disabled { opacity: 0.6; cursor: not-allowed; }
   50%       { opacity: 0.4; }
 }
 
+.leaflet-control-zoom {
+  position: absolute !important;
+  top: 66% !important;
+  left: 10px !important;
+}
+
 @keyframes marker-pulse {
   0%, 100% { box-shadow: 0 0 6px var(--pulse-color); }
   50% { box-shadow: 0 0 18px var(--pulse-color); }
