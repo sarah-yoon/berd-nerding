@@ -28,7 +28,7 @@ export default function RegisterPage() {
   }
 
   return (
-    <div style={{ maxWidth: 380, margin: '80px auto', padding: '0 16px' }}>
+    <div style={{ width: '60%', maxWidth: 600, margin: '60px auto', padding: '0 24px' }}>
       <h2 style={{ color: 'var(--color-text)', marginBottom: 24 }}>Create account</h2>
       {error && <p style={{ color: '#e74c3c', marginBottom: 12, fontSize: '0.9em' }}>{error}</p>}
       <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
