@@ -6,11 +6,13 @@ import ErrorBanner from '../components/ErrorBanner'
 import SkeletonCard from '../components/SkeletonCard'
 import ConfirmDialog from '../components/ConfirmDialog'
 import { MapPin, Star } from 'lucide-react'
+import { useBreakpoint } from '../hooks/useBreakpoint'
 
 const MILESTONES = [10, 25, 50, 100, 200]
 
 export default function LifeListPage() {
   const { addToast } = useToast()
+  const isMobile = useBreakpoint() === 'mobile'
   const [sightings, setSightings] = useState([])
   const [loading,   setLoading]   = useState(true)
   const [error,     setError]     = useState(null)
@@ -41,7 +43,7 @@ export default function LifeListPage() {
   const milestone = MILESTONES.filter(m => speciesCount >= m).pop()
 
   return (
-    <div style={{ width: '60%', margin: '0 auto', padding: '32px 24px' }}>
+    <div style={{ width: isMobile ? '80%' : '50%', margin: '0 auto', padding: '32px 24px' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
         <h2 style={{ color: 'var(--color-text)' }}>My Life List</h2>
         <Link to="/log" style={{

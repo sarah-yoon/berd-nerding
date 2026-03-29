@@ -3,12 +3,14 @@ import { useNavigate, useParams, useLocation } from 'react-router-dom'
 import client from '../api/client'
 import { useToast } from '../context/ToastContext'
 import SpeciesAutocomplete from '../components/SpeciesAutocomplete'
+import { useBreakpoint } from '../hooks/useBreakpoint'
 
 export default function LogSightingPage() {
   const { id } = useParams()
   const { state } = useLocation()
   const navigate = useNavigate()
   const { addToast } = useToast()
+  const isMobile = useBreakpoint() === 'mobile'
   const isEdit = !!id
 
   const savedLocation = (() => { try { return JSON.parse(localStorage.getItem('birdmap_last_location')) } catch { return null } })()
@@ -77,7 +79,7 @@ export default function LogSightingPage() {
   const set = (key) => (val) => setForm(prev => ({ ...prev, [key]: val }))
 
   return (
-    <div style={{ width: '60%', margin: '40px auto', padding: '0 24px' }}>
+    <div style={{ width: isMobile ? '80%' : '50%', margin: '40px auto', padding: '0 24px' }}>
       <h2 style={{ color: 'var(--color-text)', marginBottom: 24 }}>
         {isEdit ? 'Edit Sighting' : 'Log a Sighting'}
       </h2>
