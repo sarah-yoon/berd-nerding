@@ -215,8 +215,8 @@ export default function HomePage() {
                 style={{
                   background: 'var(--color-surface)', border: '1px solid var(--color-border)',
                   borderLeft: '4px solid var(--color-accent)', borderRadius: 10,
-                  padding: isMobile ? '10px 12px' : '14px 20px',
-                  marginBottom: isMobile ? 6 : 10, cursor: 'pointer',
+                  padding: isMobile ? '10px 12px' : '20px 28px',
+                  marginBottom: isMobile ? 6 : 12, cursor: 'pointer',
                   transition: 'background 0.15s',
                 }}
                 onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.06)'}
@@ -225,13 +225,13 @@ export default function HomePage() {
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
                   <div style={{
                     fontFamily: 'Georgia,serif', fontWeight: 700, color: 'var(--color-text)',
-                    fontSize: isMobile ? '0.85em' : '1.05em',
+                    fontSize: isMobile ? '0.85em' : '1.15em',
                   }}>
                     {s.comName}
                   </div>
                   {s.obsDt && (
                     <span style={{
-                      fontSize: isMobile ? '0.65em' : '0.8em',
+                      fontSize: isMobile ? '0.65em' : '0.9em',
                       color: 'var(--color-text-muted)', opacity: 0.7, flexShrink: 0, marginLeft: 8,
                     }}>
                       {formatTime(s.obsDt)}
@@ -239,10 +239,10 @@ export default function HomePage() {
                   )}
                 </div>
                 <div style={{
-                  fontSize: isMobile ? '0.7em' : '0.85em',
+                  fontSize: isMobile ? '0.7em' : '0.95em',
                   color: 'var(--color-text-muted)',
-                  display: 'flex', alignItems: 'center', gap: 4,
-                  marginTop: isMobile ? 2 : 4,
+                  display: 'flex', alignItems: 'center', gap: 5,
+                  marginTop: isMobile ? 2 : 6,
                 }}>
                   <MapPin size={isMobile ? 10 : 13} />
                   <AddressText sighting={s} style={{ fontSize: 'inherit', color: 'inherit' }} />
