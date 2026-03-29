@@ -2,10 +2,10 @@ import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTheme } from '../hooks/useTheme'
 import { LocateFixed, MapPin, Clock } from 'lucide-react'
-import { formatLocName } from '../utils/formatLocName'
 import client from '../api/client'
 import SkeletonCard from '../components/SkeletonCard'
 import LocationAutocomplete from '../components/LocationAutocomplete'
+import AddressText from '../components/AddressText'
 
 const DEFAULT = { lat: 40.7128, lng: -74.0060, name: 'New York' }
 
@@ -200,7 +200,7 @@ export default function HomePage() {
                   )}
                 </div>
                 <div style={{ fontSize: '0.75em', color: 'var(--color-text-muted)', display: 'flex', alignItems: 'center', gap: 3, marginTop: 2 }}>
-                  <MapPin size={10} /> {formatLocName(s.locName)}
+                  <MapPin size={10} /> <AddressText sighting={s} style={{ fontSize: 'inherit', color: 'inherit' }} />
                 </div>
               </div>
             ))}

@@ -1,31 +1,27 @@
 import { useState, useEffect } from 'react'
 import { reverseGeocode } from '../utils/reverseGeocode'
-import { formatLocName } from '../utils/formatLocName'
 
-/**
- * Hook that returns a display address for a sighting.
- * Initially shows the cleaned eBird locName, then updates
- * to the reverse-geocoded address once it loads.
- */
 export function useAddress(sighting) {
-  const fallback = formatLocName(sighting?.locName)
-  const [address, setAddress] = useState(fallback)
+  const [address, setAddress] = useState(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     if (!sighting?.lat || !sighting?.lng) {
-      setAddress(fallback)
+      setAddress(null)
+      setLoading(false)
       return
     }
 
-    // Reset to fallback for new sighting
-    setAddress(fallback)
-
+    setLoading(true)
     let cancelled = false
     reverseGeocode(sighting.lat, sighting.lng).then(result => {
-      if (!cancelled && result) setAddress(result)
+      if (!cancelled) {
+        setAddress(result || null)
+        setLoading(false)
+      }
     })
     return () => { cancelled = true }
   }, [sighting?.lat, sighting?.lng])
 
-  return address
+  return { address, loading }
 }

@@ -1,10 +1,22 @@
 import { useAddress } from '../hooks/useAddress'
+import { formatLocName } from '../utils/formatLocName'
 
-/**
- * Renders a reverse-geocoded address for a sighting.
- * Shows cleaned eBird locName initially, then updates to proper address.
- */
 export default function AddressText({ sighting, style }) {
-  const address = useAddress(sighting)
-  return <span style={style}>{address}</span>
+  const { address, loading } = useAddress(sighting)
+
+  if (loading) {
+    return (
+      <span style={{
+        ...style,
+        display: 'inline-block',
+        width: '70%',
+        height: '0.9em',
+        background: 'rgba(255,255,255,0.08)',
+        borderRadius: 4,
+        animation: 'pulse 1.2s ease-in-out infinite',
+      }} />
+    )
+  }
+
+  return <span style={style}>{address || formatLocName(sighting?.locName)}</span>
 }
