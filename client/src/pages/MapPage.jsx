@@ -190,7 +190,7 @@ export default function MapPage() {
                   border: '1px solid var(--color-border)',
                   background: 'rgba(0,0,0,0.3)', color: 'var(--color-text)', fontSize: 11,
                 }}>
-                {[5, 10, 25, 50, 100].map(d => <option key={d} value={d}>{d} km</option>)}
+                {[5, 10, 25, 50].map(d => <option key={d} value={d}>{d} km</option>)}
               </select>
               {loading && <span style={{ color: 'var(--color-text-muted)', fontSize: 11, marginLeft: 'auto' }}>Loading…</span>}
             </div>
