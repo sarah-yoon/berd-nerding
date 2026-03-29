@@ -30,13 +30,12 @@ beforeEach(() => {
   localStorage.clear()
 })
 
-test('renders location and bird search fields', () => {
+test('renders location search field', () => {
   renderPage()
   expect(screen.getByPlaceholderText(/city, state/i)).toBeInTheDocument()
-  expect(screen.getByPlaceholderText(/bird.*optional/i)).toBeInTheDocument()
 })
 
-test('shows error when search clicked with no location and no saved location', async () => {
+test('shows error when search clicked with no location', async () => {
   renderPage()
   fireEvent.click(screen.getByRole('button', { name: /search/i }))
   await waitFor(() => {
@@ -44,14 +43,7 @@ test('shows error when search clicked with no location and no saved location', a
   })
 })
 
-test('uses last known location for bird-only search', async () => {
-  localStorage.setItem('birdmap_last_location', JSON.stringify({ lat: 40.71, lng: -74.00, name: 'New York' }))
+test('renders use my location button', () => {
   renderPage()
-  // Type in species field only
-  fireEvent.change(screen.getByPlaceholderText(/bird.*optional/i), { target: { value: 'Bald Eagle' } })
-  fireEvent.click(screen.getByRole('button', { name: /search/i }))
-  await waitFor(() => {
-    expect(screen.getByText(/using your last known location/i)).toBeInTheDocument()
-    expect(screen.getByText(/New York/)).toBeInTheDocument()
-  })
+  expect(screen.getByText(/use my location/i)).toBeInTheDocument()
 })

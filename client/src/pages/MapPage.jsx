@@ -13,6 +13,7 @@ import ErrorBanner from '../components/ErrorBanner'
 import SpeciesAutocomplete from '../components/SpeciesAutocomplete'
 import { fetchPhylopicIcon } from '../services/phylopicService'
 import MobileBirdCard from '../components/MobileBirdCard'
+import MobileSpeciesSheet from '../components/MobileSpeciesSheet'
 
 const ACCENT = {
   dawn: '#f9a87a', morning: '#7dd4f8', afternoon: '#b8d870', dusk: '#f0c060', night: '#8080d0',
@@ -136,35 +137,7 @@ export default function MapPage() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: 'calc(100dvh - 44px)', overflow: 'hidden', position: 'fixed', top: 44, left: 0, right: 0, bottom: 0 }}>
-      {/* Filter bar — only on mobile (desktop filter is inside the list) */}
-      {isMobile && (
-        <div style={{
-          padding: '10px 16px', background: 'var(--color-surface)',
-          borderBottom: '1px solid var(--color-border)',
-          display: 'flex', gap: 10, alignItems: 'center',
-          position: 'relative', zIndex: 10000, overflow: 'visible',
-        }}>
-          <div style={{ flex: 1 }}>
-            <SpeciesAutocomplete
-              value={speciesFilter}
-              onChange={setSpeciesFilter}
-              placeholder="Filter species…"
-              suggestions={uniqueSpecies}
-            />
-          </div>
-          <select
-            value={localDist}
-            onChange={handleRadiusChange}
-            style={{
-              padding: '7px 10px', borderRadius: 20,
-              border: '1px solid var(--color-border)',
-              background: 'rgba(0,0,0,0.2)', color: 'var(--color-text)', fontSize: '0.85em',
-            }}>
-            {[5, 10, 25, 50].map(d => <option key={d} value={d}>{d} km</option>)}
-          </select>
-          {loading && <span style={{ color: 'var(--color-text-muted)', fontSize: '0.8em' }}>Loading…</span>}
-        </div>
-      )}
+      {/* Mobile gets full map — filter is inside the species sheet */}
 
       {error && (
         <div style={{ padding: '0 16px', paddingTop: 12 }}>
@@ -269,6 +242,20 @@ export default function MapPage() {
             style={panelOverlay ? {
               position: 'absolute', right: 0, top: 0, bottom: 0, zIndex: 600,
             } : undefined}
+          />
+        )}
+
+        {/* Mobile species sheet */}
+        {isMobile && !selectedSighting && (
+          <MobileSpeciesSheet
+            sightings={filtered}
+            onSelect={(s) => {
+              setSelectedSighting(s)
+              if (!isAuth) setNudge(true)
+            }}
+            speciesFilter={speciesFilter}
+            onSpeciesFilterChange={setSpeciesFilter}
+            loading={loading}
           />
         )}
 
