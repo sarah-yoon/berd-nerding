@@ -136,7 +136,7 @@ export default function MapPage() {
   const panelOverlay = isTablet && selectedSighting
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: 'calc(100dvh - 44px)', overflow: 'hidden', position: 'fixed', top: 44, left: 0, right: 0, bottom: 0 }}>
+    <div style={{ display: 'flex', flexDirection: 'column', height: 'calc(100dvh - 52px)', overflow: 'hidden', position: 'fixed', top: 52, left: 0, right: 0, bottom: 0 }}>
       {/* Mobile gets full map — filter is inside the species sheet */}
 
       {error && (
@@ -246,7 +246,7 @@ export default function MapPage() {
         )}
 
         {/* Mobile species sheet */}
-        {isMobile && !selectedSighting && (
+        {isMobile && (
           <MobileSpeciesSheet
             sightings={filtered}
             onSelect={(s) => {

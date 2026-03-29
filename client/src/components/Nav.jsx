@@ -13,8 +13,8 @@ export default function Nav() {
   return (
     <nav style={{
       display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-      padding: '6px 14px', background: 'rgba(0,0,0,0.3)',
-      borderBottom: '1px solid var(--color-border)', height: 44,
+      padding: '8px 14px', background: 'rgba(0,0,0,0.3)',
+      borderBottom: '1px solid var(--color-border)', height: 52,
     }}>
       <Link to="/" style={{
         display: 'flex', alignItems: 'center', gap: 8,

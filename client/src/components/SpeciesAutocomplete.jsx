@@ -88,5 +88,5 @@ export default function SpeciesAutocomplete({ value, onChange, placeholder = 'Sp
 const inputStyle = {
   width: '100%', padding: '10px 16px', borderRadius: 20,
   border: '1px solid var(--color-border)', background: 'var(--color-surface)',
-  color: 'var(--color-text)', fontSize: '0.9em',
+  color: '#fff', fontSize: '0.9em',
 }
