@@ -52,12 +52,8 @@ export default function LocationAutocomplete({ value, onChange, onSelect, placeh
         onChange={e => onChange(e.target.value)}
         onFocus={() => { if (results.length > 0) { updatePosition(); setOpen(true) } }}
         onBlur={() => setTimeout(() => setOpen(false), 150)}
-        placeholder={value ? '' : placeholder}
+        placeholder={placeholder}
         autoComplete="off"
-        autoCorrect="off"
-        autoCapitalize="off"
-        spellCheck="false"
-        name="location-search-no-autofill"
         style={inputStyle}
       />
       {open && results.length > 0 && (
