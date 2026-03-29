@@ -130,32 +130,32 @@ export default function HomePage() {
 
   return (
     <div style={{
-      maxWidth: isMobile ? '100%' : 900,
+      maxWidth: isMobile ? '100%' : 1400,
       margin: '0 auto',
-      padding: isMobile ? '24px 16px 30px' : '60px 40px 60px',
+      padding: isMobile ? '16px 12px 20px' : '40px 48px 40px',
       minHeight: 'calc(100dvh - 52px)',
     }}>
       <h1 style={{
         color: 'var(--color-text)',
-        fontSize: isMobile ? '1.5em' : '2.4em',
-        marginBottom: isMobile ? 4 : 8,
+        fontSize: isMobile ? '1.3em' : '2em',
+        marginBottom: isMobile ? 2 : 4,
       }}>
         Find birds near you
       </h1>
-      <p className="subtitle" style={{ marginBottom: 2, fontSize: isMobile ? '0.85em' : '1em' }}>
+      <p className="subtitle" style={{ marginBottom: 1, fontSize: isMobile ? '0.75em' : '0.9em' }}>
         Powered by live eBird data
       </p>
       <p style={{
         color: 'var(--color-accent)',
-        fontSize: isMobile ? '0.8em' : '0.95em',
-        marginBottom: isMobile ? 16 : 32,
+        fontSize: isMobile ? '0.7em' : '0.85em',
+        marginBottom: isMobile ? 10 : 20,
       }}>
         {TIPS[theme]}
       </p>
 
       <form onSubmit={handleSearch} style={{
-        display: 'flex', gap: isMobile ? 8 : 12,
-        marginBottom: isMobile ? 6 : 10,
+        display: 'flex', gap: isMobile ? 6 : 10,
+        marginBottom: isMobile ? 4 : 8,
       }}>
         <div style={{ flex: 1 }}>
           <LocationAutocomplete
@@ -168,7 +168,7 @@ export default function HomePage() {
         <button
           type="submit"
           style={{
-            padding: isMobile ? '12px 20px' : '16px 40px',
+            padding: isMobile ? '10px 16px' : '12px 32px',
             borderRadius: 24,
             background: 'var(--color-accent)', color: 'var(--color-accent-fg)',
             border: 'none', fontWeight: 600, whiteSpace: 'nowrap', flexShrink: 0,
@@ -182,8 +182,8 @@ export default function HomePage() {
         onClick={handleGeolocate}
         style={{
           background: 'none', border: 'none', color: 'var(--color-text-muted)',
-          fontSize: isMobile ? '0.8em' : '0.9em',
-          cursor: 'pointer', marginBottom: isMobile ? 6 : 10,
+          fontSize: isMobile ? '0.7em' : '0.85em',
+          cursor: 'pointer', marginBottom: isMobile ? 4 : 8,
           display: 'flex', alignItems: 'center', gap: 5,
         }}>
         <LocateFixed size={isMobile ? 13 : 15} /> Use my location
@@ -192,15 +192,15 @@ export default function HomePage() {
       {error && <p style={{ color: '#e74c3c', fontSize: '0.85em', marginBottom: 16 }}>{error}</p>}
 
       {/* Activity */}
-      <div style={{ marginTop: isMobile ? 20 : 40 }}>
+      <div style={{ marginTop: isMobile ? 14 : 28 }}>
         {activityLoading ? (
           <>{[1, 2, 3].map(i => <SkeletonCard key={i} />)}</>
         ) : activity ? (
           <>
             <p style={{
               color: 'var(--color-text-muted)',
-              fontSize: isMobile ? '0.8em' : '0.95em',
-              marginBottom: isMobile ? 10 : 16,
+              fontSize: isMobile ? '0.7em' : '0.9em',
+              marginBottom: isMobile ? 8 : 12,
             }}>
               <strong style={{ color: 'var(--color-accent)' }}>{activity.species}</strong> species spotted near {activity.name} recently
             </p>
@@ -215,8 +215,8 @@ export default function HomePage() {
                 style={{
                   background: 'var(--color-surface)', border: '1px solid var(--color-border)',
                   borderLeft: '4px solid var(--color-accent)', borderRadius: 10,
-                  padding: isMobile ? '12px 14px' : '18px 24px',
-                  marginBottom: isMobile ? 8 : 12, cursor: 'pointer',
+                  padding: isMobile ? '10px 12px' : '14px 20px',
+                  marginBottom: isMobile ? 6 : 10, cursor: 'pointer',
                   transition: 'background 0.15s',
                 }}
                 onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.06)'}
@@ -225,13 +225,13 @@ export default function HomePage() {
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
                   <div style={{
                     fontFamily: 'Georgia,serif', fontWeight: 700, color: 'var(--color-text)',
-                    fontSize: isMobile ? '0.95em' : '1.1em',
+                    fontSize: isMobile ? '0.85em' : '1.05em',
                   }}>
                     {s.comName}
                   </div>
                   {s.obsDt && (
                     <span style={{
-                      fontSize: isMobile ? '0.7em' : '0.85em',
+                      fontSize: isMobile ? '0.65em' : '0.8em',
                       color: 'var(--color-text-muted)', opacity: 0.7, flexShrink: 0, marginLeft: 8,
                     }}>
                       {formatTime(s.obsDt)}
@@ -239,10 +239,10 @@ export default function HomePage() {
                   )}
                 </div>
                 <div style={{
-                  fontSize: isMobile ? '0.8em' : '0.9em',
+                  fontSize: isMobile ? '0.7em' : '0.85em',
                   color: 'var(--color-text-muted)',
                   display: 'flex', alignItems: 'center', gap: 4,
-                  marginTop: isMobile ? 3 : 6,
+                  marginTop: isMobile ? 2 : 4,
                 }}>
                   <MapPin size={isMobile ? 10 : 13} />
                   <AddressText sighting={s} style={{ fontSize: 'inherit', color: 'inherit' }} />
