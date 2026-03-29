@@ -1,15 +1,17 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+html {
+  background: #080d1a;
+}
 html, body, #root {
   height: 100%;
 }
 
 body {
   font-family: 'Inter', system-ui, sans-serif;
-  background: var(--color-bg);
+  background: #080d1a;
   color: var(--color-text);
   min-height: 100dvh;
-  transition: background 0.4s ease, color 0.4s ease;
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: transparent;
 }
