@@ -63,7 +63,7 @@ export default function LocationAutocomplete({ value, onChange, onSelect, placeh
         onFocus={() => { if (results.length > 0) { updatePosition(); setOpen(true) } }}
         onBlur={() => setTimeout(() => setOpen(false), 150)}
         autoComplete="off"
-        style={{ ...baseInputStyle, background: value ? 'transparent' : 'var(--color-surface)', position: 'relative', zIndex: 2 }}
+        style={{ ...baseInputStyle, background: 'var(--color-surface)', position: 'relative', zIndex: 2 }}
       />
       {open && results.length > 0 && (
         <ul style={{
