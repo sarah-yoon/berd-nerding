@@ -17,13 +17,12 @@ export async function reverseGeocode(lat, lng) {
       const addr = data.address || {}
 
       const street = addr.road || addr.pedestrian || addr.footway || ''
-      const houseNum = addr.house_number || ''
       const city = addr.city || addr.town || addr.village || addr.hamlet || addr.county || ''
       const state = addr.state || ''
       const country = addr.country || ''
 
       const parts = []
-      if (street) parts.push(houseNum ? `${houseNum} ${street}` : street)
+      if (street) parts.push(street)
       if (city) parts.push(city)
       if (state) parts.push(state)
       if (!state && country) parts.push(country)
