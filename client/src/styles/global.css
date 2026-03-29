@@ -2,6 +2,7 @@
 
 html {
   height: 100%;
+  background: #0a0a1a;
 }
 
 body {
@@ -12,6 +13,7 @@ body {
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: transparent;
   overflow-x: hidden;
+  background: #0a0a1a;
 }
 
 #root {

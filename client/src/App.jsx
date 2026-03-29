@@ -19,7 +19,7 @@ function ThemedApp() {
   return (
     <div className={`theme-${theme}`} style={{
       minHeight: '100dvh',
-      backgroundColor: 'var(--color-bg-solid)',
+      background: 'var(--color-bg)',
       display: 'flex',
       flexDirection: 'column',
       flex: 1,
