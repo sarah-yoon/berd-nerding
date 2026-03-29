@@ -54,7 +54,7 @@ export default function LocationAutocomplete({ value, onChange, onSelect, placeh
         onBlur={() => setTimeout(() => setOpen(false), 150)}
         placeholder={placeholder}
         autoComplete="off"
-        style={inputStyle}
+        style={{ ...baseInputStyle, background: value ? 'transparent' : 'var(--color-surface)' }}
       />
       {open && results.length > 0 && (
         <ul style={{
@@ -91,8 +91,8 @@ export default function LocationAutocomplete({ value, onChange, onSelect, placeh
   )
 }
 
-const inputStyle = {
+const baseInputStyle = {
   width: '100%', padding: '10px 16px', borderRadius: 20,
-  border: '1px solid var(--color-border)', background: 'rgba(20,20,40,0.95)',
+  border: '1px solid var(--color-border)',
   color: '#fff', fontSize: '0.9em',
 }
