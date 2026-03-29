@@ -125,7 +125,7 @@ export default function HomePage() {
   }
 
   return (
-    <div style={{ maxWidth: 600, margin: '0 auto', padding: '40px 16px 20px' }}>
+    <div style={{ maxWidth: 600, margin: '0 auto', padding: '40px 16px 40px', minHeight: 'calc(100dvh - 52px)' }}>
       <h1 style={{ color: 'var(--color-text)', fontSize: 'clamp(1.4em, 5vw, 2em)', marginBottom: 4 }}>
         Find birds near you
       </h1>
