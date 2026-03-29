@@ -17,7 +17,7 @@ import './styles/themes.css'
 function ThemedApp() {
   const theme = useTheme()
   return (
-    <div className={`theme-${theme}`} style={{ minHeight: '100vh', background: 'var(--color-bg)' }}>
+    <div className={`theme-${theme}`} style={{ minHeight: '100dvh', background: 'var(--color-bg)', backgroundAttachment: 'fixed', backgroundColor: 'var(--color-bg-solid)' }}>
       <BrowserRouter>
         <Nav />
         <Routes>
