@@ -130,9 +130,9 @@ export default function HomePage() {
 
   return (
     <div style={{
-      maxWidth: isMobile ? '100%' : 4000,
-      margin: '0 auto',
-      padding: isMobile ? '20px 24px 24px' : '30px 16px 30px',
+      width: '100%',
+      margin: 0,
+      padding: isMobile ? '20px 24px 24px' : '30px 24px 30px',
       minHeight: 'calc(100dvh - 52px)',
     }}>
       <h1 style={{
