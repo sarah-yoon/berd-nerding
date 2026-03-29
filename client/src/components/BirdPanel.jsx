@@ -3,7 +3,7 @@ import { X, Bird } from 'lucide-react'
 import { fetchBirdPhoto } from '../services/iNaturalistService'
 import BirdSightingInfo from './BirdSightingInfo'
 
-export default function BirdPanel({ sighting, onClose, phylopicUrl = null, style }) {
+export default function BirdPanel({ sighting, onClose, phylopicUrl = null, style, addressMap }) {
   const [photo, setPhoto] = useState(null)
   const closeRef = useRef(null)
 
@@ -92,6 +92,8 @@ export default function BirdPanel({ sighting, onClose, phylopicUrl = null, style
 
       <div style={{ padding: '16px 18px', flex: 1 }}>
         <BirdSightingInfo
+          sighting={sighting}
+          addressMap={addressMap}
           comName={sighting.comName}
           sciName={sighting.sciName}
           locName={sighting.locName}

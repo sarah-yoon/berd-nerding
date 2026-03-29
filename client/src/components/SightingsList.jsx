@@ -1,6 +1,6 @@
 import { useMemo, useState, useCallback } from 'react'
 import { sightingKey } from '../utils/sightingKey'
-import { formatLocName } from '../utils/formatLocName'
+import { getDisplayAddress } from '../utils/formatLocName'
 
 function formatShortTime(obsDt) {
   if (!obsDt) return ''
@@ -38,6 +38,7 @@ export default function SightingsList({
   listOpen,
   onToggleList,
   loading,
+  addressMap,
 }) {
   const [expandedSpecies, setExpandedSpecies] = useState(new Set())
 
@@ -293,7 +294,7 @@ function SpeciesGroup({ group, expanded, onToggle, onSelect, onHover, onHoverEnd
                 fontSize: 11, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
                 maxWidth: 140,
               }}>
-                {formatLocName(s.locName)}
+                {getDisplayAddress(s, addressMap)}
               </div>
               {s.howMany && (
                 <div style={{ color: 'var(--color-text-muted)', fontSize: 9, marginTop: 1 }}>

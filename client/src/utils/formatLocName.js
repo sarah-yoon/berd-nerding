@@ -11,6 +11,18 @@
  *   "700 block N La Fayette Park Place"
  *   "My Yard"
  */
+/**
+ * Get display address: use reverse-geocoded address if available, fall back to cleaned locName.
+ */
+export function getDisplayAddress(sighting, addressMap) {
+  if (addressMap && sighting?.lat && sighting?.lng) {
+    const key = `${sighting.lat},${sighting.lng}`
+    const addr = addressMap.get(key)
+    if (addr) return addr
+  }
+  return formatLocName(sighting?.locName)
+}
+
 export function formatLocName(locName) {
   if (!locName) return ''
 
