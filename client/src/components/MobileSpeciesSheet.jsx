@@ -1,6 +1,6 @@
 import { useMemo, useState, useRef, useEffect } from 'react'
 import { sightingKey } from '../utils/sightingKey'
-import { getDisplayAddress } from '../utils/formatLocName'
+import AddressText from './AddressText'
 import { List, X } from 'lucide-react'
 
 function formatShortTime(obsDt) {
@@ -26,7 +26,7 @@ function groupBySpecies(sightings) {
   return [...map.values()].sort((a, b) => a.comName.localeCompare(b.comName))
 }
 
-export default function MobileSpeciesSheet({ sightings, onSelect, speciesFilter, onSpeciesFilterChange, loading, initialOpen = false, addressMap }) {
+export default function MobileSpeciesSheet({ sightings, onSelect, speciesFilter, onSpeciesFilterChange, loading, initialOpen = false }) {
   const [open, setOpen] = useState(initialOpen)
   const [expandedSpecies, setExpandedSpecies] = useState(new Set())
   const panelRef = useRef(null)
@@ -231,7 +231,7 @@ export default function MobileSpeciesSheet({ sightings, onSelect, speciesFilter,
                       }}
                     >
                       <div>
-                        <div style={{ color: 'var(--color-text)', fontSize: 11 }}>{getDisplayAddress(s, addressMap)}</div>
+                        <AddressText sighting={s} style={{ color: 'var(--color-text)', fontSize: 11 }} />
                         {s.howMany && (
                           <div style={{ color: 'var(--color-text-muted)', fontSize: 9, marginTop: 1 }}>
                             × {s.howMany} individual{s.howMany !== 1 ? 's' : ''}

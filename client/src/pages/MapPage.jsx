@@ -14,7 +14,6 @@ import SpeciesAutocomplete from '../components/SpeciesAutocomplete'
 import { fetchPhylopicIcon } from '../services/phylopicService'
 import MobileBirdCard from '../components/MobileBirdCard'
 import MobileSpeciesSheet from '../components/MobileSpeciesSheet'
-import { batchReverseGeocode } from '../utils/reverseGeocode'
 
 const ACCENT = {
   dawn: '#f9a87a', morning: '#7dd4f8', afternoon: '#b8d870', dusk: '#f0c060', night: '#8080d0',
@@ -41,7 +40,6 @@ export default function MapPage() {
   const [selectedSighting, setSelectedSighting] = useState(null)
   const [hoveredSighting, setHoveredSighting] = useState(null)
   const [iconMap, setIconMap] = useState(new Map())
-  const [addressMap, setAddressMap] = useState(new Map()) // "lat,lng" → formatted address
   const [listOpen, setListOpen] = useState(() => {
     try { return JSON.parse(localStorage.getItem('birdmap_list_open')) ?? true } catch { return true }
   })
@@ -83,15 +81,6 @@ export default function MapPage() {
       .then(entries => setIconMap(new Map(entries)))
   }, [sightings])
 
-  // Reverse geocode all unique coordinates to get proper addresses (progressive)
-  useEffect(() => {
-    if (!sightings.length) return
-    let cancelled = false
-    batchReverseGeocode(sightings, (map) => {
-      if (!cancelled) setAddressMap(new Map(map))
-    })
-    return () => { cancelled = true }
-  }, [sightings])
 
   useEffect(() => {
     if (species) setSpeciesFilter(species)
@@ -178,7 +167,6 @@ export default function MapPage() {
             listOpen={listOpen}
             onToggleList={() => setListOpen(o => !o)}
             loading={loading}
-            addressMap={addressMap}
           />
         )}
 
@@ -252,7 +240,6 @@ export default function MapPage() {
             sighting={selectedSighting}
             onClose={handleClosePanel}
             phylopicUrl={iconMap.get(selectedSighting.sciName) ?? null}
-            addressMap={addressMap}
             style={panelOverlay ? {
               position: 'absolute', right: 0, top: 0, bottom: 0, zIndex: 600,
             } : undefined}
@@ -271,7 +258,6 @@ export default function MapPage() {
             onSpeciesFilterChange={setSpeciesFilter}
             loading={loading}
             initialOpen={true}
-            addressMap={addressMap}
           />
         )}
 
@@ -281,7 +267,6 @@ export default function MapPage() {
             sighting={selectedSighting}
             onClose={handleClosePanel}
             phylopicUrl={iconMap.get(selectedSighting.sciName) ?? null}
-            addressMap={addressMap}
           />
         )}
       </div>

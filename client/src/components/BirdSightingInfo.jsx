@@ -1,5 +1,5 @@
 import { MapPin, Calendar, Hash, ExternalLink } from 'lucide-react'
-import { getDisplayAddress } from '../utils/formatLocName'
+import AddressText from './AddressText'
 
 function formatObsDt(obsDt) {
   if (!obsDt) return null
@@ -11,7 +11,7 @@ function formatObsDt(obsDt) {
   return `${dateStr} · ${timeStr}`
 }
 
-export default function BirdSightingInfo({ comName, sciName, locName, obsDt, howMany, subId, compact = false, sighting, addressMap }) {
+export default function BirdSightingInfo({ comName, sciName, locName, obsDt, howMany, subId, compact = false, sighting }) {
   const countDisplay = !howMany
     ? 'present'
     : `${howMany} individual${howMany !== 1 ? 's' : ''}`
@@ -20,10 +20,6 @@ export default function BirdSightingInfo({ comName, sciName, locName, obsDt, how
   const factSize = compact ? 12 : 13
   const iconSize = compact ? 12 : 13
   const gap = compact ? 7 : 10
-
-  const displayLoc = sighting && addressMap
-    ? getDisplayAddress(sighting, addressMap)
-    : getDisplayAddress({ locName }, null)
 
   return (
     <div>
@@ -37,7 +33,7 @@ export default function BirdSightingInfo({ comName, sciName, locName, obsDt, how
       <div style={{ marginTop: compact ? 10 : 16, display: 'flex', flexDirection: 'column', gap }}>
         <div style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
           <MapPin size={iconSize} style={{ color: 'var(--color-text-muted)', marginTop: 1, flexShrink: 0 }} />
-          <span style={{ color: 'var(--color-text)', fontSize: factSize, lineHeight: 1.4 }}>{displayLoc}</span>
+          <AddressText sighting={sighting || { locName, lat: null, lng: null }} style={{ color: 'var(--color-text)', fontSize: factSize, lineHeight: 1.4 }} />
         </div>
 
         {formattedDate && (
