@@ -6,7 +6,7 @@ let lastRequest = 0
 function processQueue() {
   if (queue.length === 0) return
   const now = Date.now()
-  const wait = Math.max(0, 1100 - (now - lastRequest))
+  const wait = Math.max(0, 1500 - (now - lastRequest))
   setTimeout(() => {
     const next = queue.shift()
     if (next) next()
@@ -34,7 +34,10 @@ export async function reverseGeocode(lat, lng) {
         `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json&zoom=18&addressdetails=1`,
         { headers: { 'User-Agent': 'BerdNerding/1.0' } }
       )
-      if (!res.ok) throw new Error(res.status)
+      if (!res.ok) {
+        // Don't cache failures — allow retry later
+        return ''
+      }
       const data = await res.json()
       const addr = data.address || {}
 
@@ -53,7 +56,7 @@ export async function reverseGeocode(lat, lng) {
       cache.set(key, result)
       return result
     } catch {
-      cache.set(key, '')
+      // Don't cache network errors — allow retry later
       return ''
     } finally {
       pending.delete(key)
