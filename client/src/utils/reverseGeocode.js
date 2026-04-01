@@ -1,5 +1,25 @@
 const cache = new Map() // "lat,lng" → formatted address string
 const pending = new Map() // "lat,lng" → Promise (dedup in-flight requests)
+const queue = [] // queued resolve callbacks
+let lastRequest = 0
+
+function processQueue() {
+  if (queue.length === 0) return
+  const now = Date.now()
+  const wait = Math.max(0, 1100 - (now - lastRequest))
+  setTimeout(() => {
+    const next = queue.shift()
+    if (next) next()
+    if (queue.length > 0) processQueue()
+  }, wait)
+}
+
+function enqueue() {
+  return new Promise(resolve => {
+    queue.push(resolve)
+    if (queue.length === 1) processQueue()
+  })
+}
 
 export async function reverseGeocode(lat, lng) {
   const key = `${lat},${lng}`
@@ -7,6 +27,8 @@ export async function reverseGeocode(lat, lng) {
   if (pending.has(key)) return pending.get(key)
 
   const promise = (async () => {
+    await enqueue()
+    lastRequest = Date.now()
     try {
       const res = await fetch(
         `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json&zoom=18&addressdetails=1`,
