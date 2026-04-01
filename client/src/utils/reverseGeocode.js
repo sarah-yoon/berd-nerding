@@ -38,8 +38,8 @@ export async function reverseGeocode(lat, lng) {
       const data = await res.json()
       const addr = data.address || {}
 
-      const street = addr.road || addr.pedestrian || addr.footway || ''
-      const city = addr.city || addr.town || addr.village || addr.hamlet || addr.county || ''
+      const street = addr.road || addr.pedestrian || addr.footway || addr.amenity || addr.building || addr.leisure || addr.park || addr.tourism || ''
+      const city = addr.city || addr.town || addr.village || addr.hamlet || addr.suburb || addr.neighbourhood || addr.county || ''
       const state = addr.state || ''
       const country = addr.country || ''
 
